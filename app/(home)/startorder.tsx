@@ -1,14 +1,13 @@
 import { Button, Pressable, StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useAuthenticator } from "@aws-amplify/ui-react-native";
+import {Picker} from '@react-native-picker/picker';
 import { Link } from "expo-router";
 
 
-const HomeScreen = () => {
-
-  
-  const { signOut } = useAuthenticator();
+const StartOrderScreen = () => {
+  const [selectedLanguage, setSelectedLanguage] = useState();
 
   function onPress(){
     console.log("Pressed");
@@ -18,20 +17,35 @@ const HomeScreen = () => {
   return (
     <SafeAreaView>
     
-    <Link href={"/startorder"} asChild>
+     <Text>Choose meals calories</Text>
+
+     <Picker
+  selectedValue={selectedLanguage}
+  onValueChange={(itemValue, itemIndex) =>
+    setSelectedLanguage(itemValue)
+  }>
+  <Picker.Item label="900" value="900" />
+  <Picker.Item label="1200" value="1200" />
+  <Picker.Item label="1500" value="1500" />
+  <Picker.Item label="2000" value="2000" />
+</Picker>
+
+
       <Pressable style={styles.button}>
-        <Text style={styles.text}>Start Order</Text>
+        <Text style={styles.text}>Place Order</Text>
       </Pressable>
-    </Link>
-     
-      <Button title="Sign out" onPress={() => signOut()} />
+   
     </SafeAreaView>
   );
 };
 
-export default HomeScreen;
 
-const styles = StyleSheet.create({container: {
+
+export default StartOrderScreen;
+
+const styles = StyleSheet.create(
+  {
+  container: {
   flex: 1,
   padding: 24,
   backgroundColor: '#eaeaea',
@@ -45,18 +59,6 @@ button: {
   elevation: 3,
   backgroundColor: 'black',
 },
-title: {
-  marginTop: 16,
-  paddingVertical: 8,
-  borderWidth: 4,
-  borderColor: '#20232a',
-  borderRadius: 6,
-  backgroundColor: '#61dafb',
-  color: '#20232a',
-  textAlign: 'center',
-  fontSize: 30,
-  fontWeight: 'bold',
-},
 text: {
   fontSize: 16,
   lineHeight: 21,
@@ -64,4 +66,4 @@ text: {
   letterSpacing: 0.25,
   color: 'white',
 },
-});
+  })
