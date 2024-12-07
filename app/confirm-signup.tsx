@@ -13,34 +13,32 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import tw from "twrnc";
-import { signIn } from "aws-amplify/auth";
-import { Link, Redirect, router } from "expo-router";
+import { confirmSignUp, signIn } from "aws-amplify/auth";
+import { Link, Redirect, router, useLocalSearchParams } from "expo-router";
 
-const SignInScreen = () => {
+const ConfirmSignUpScreen = () => {
+  const [code, setcode] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-
-  const onSignInPressed = async () => {
+  const { username } = useLocalSearchParams();
+  const onConfimrPressed = async () => {
     setError("");
     try {
-      const { isSignedIn, nextStep } = await signIn({
+      //   const usernameParam: any = username;
+
+      const { isSignUpComplete, nextStep } = await confirmSignUp({
         username: email,
-        password,
-        options: {
-          authFlowType: "USER_PASSWORD_AUTH",
-        },
+        confirmationCode: code,
       });
-      if (isSignedIn) {
+      if (isSignUpComplete) {
         router.push("/");
       } else {
-        setError("Something went wrong! " + nextStep.signInStep);
+        setError("Something went wrong! " + nextStep.signUpStep);
       }
     } catch (e: any) {
       setError(e.message);
     }
   };
-
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <SafeAreaView style={{ backgroundColor: "#faf9ff" }}>
@@ -59,8 +57,10 @@ const SignInScreen = () => {
           style={tw`h-3/5  items-center rounded-3xl mt-3 bg-white`}
         >
           <View style={tw`mt-4`}>
-            <Text style={tw`text-xl text-center font-bold mb-1`}>Sign In</Text>
-            <Text>Log in to app to get start with new orders</Text>
+            <Text style={tw`text-xl text-center font-bold mb-1`}>
+              Confirmation
+            </Text>
+            <Text>Confirm your email</Text>
           </View>
           <View
             style={{
@@ -83,12 +83,11 @@ const SignInScreen = () => {
               ]}
             />
             <TextInput
-              secureTextEntry
-              placeholder="Password"
-              value={password}
-              onChangeText={setPassword}
+              placeholder="Code"
+              value={code}
+              onChangeText={setcode}
               // onChangeText={(text) => {
-              //   setLogin({ ...login, password: text });
+              //   setLogin({ ...login, username: text });
               // }}
               // #faf9ff #1db7af
               style={[
@@ -96,8 +95,9 @@ const SignInScreen = () => {
                 { backgroundColor: "#f4f5f7" },
               ]}
             />
+
             <TouchableOpacity
-              onPress={onSignInPressed}
+              onPress={onConfimrPressed}
               style={[
                 tw`w-full h-12 rounded-full px-4 mt-6 flex-row justify-center items-center`,
                 { backgroundColor: "#1db7af" },
@@ -106,7 +106,7 @@ const SignInScreen = () => {
               <Text
                 style={{ color: "white", fontSize: 18, fontWeight: "bold" }}
               >
-                Sign in
+                Verify
               </Text>
             </TouchableOpacity>
 
@@ -123,6 +123,6 @@ const SignInScreen = () => {
   );
 };
 
-export default SignInScreen;
+export default ConfirmSignUpScreen;
 
 const styles = StyleSheet.create({});

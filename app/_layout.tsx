@@ -55,6 +55,7 @@ function RootLayout() {
         <Stack.Screen name="homeapp" /> */}
           <Stack.Screen name="sign-in" />
           <Stack.Screen name="sign-up" />
+          <Stack.Screen name="confirm-signup" />
           <Stack.Screen name="(home)" />
 
           <Stack.Screen name="+not-found" />
