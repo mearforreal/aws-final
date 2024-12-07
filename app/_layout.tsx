@@ -14,9 +14,10 @@ import { useColorScheme } from "@/hooks/useColorScheme";
 import {
   withAuthenticator,
   useAuthenticator,
+  Authenticator,
 } from "@aws-amplify/ui-react-native";
 // Prevent the splash screen from auto-hiding before asset loading is complete.
-//SplashScreen.preventAutoHideAsync();
+SplashScreen.preventAutoHideAsync();
 
 import { Amplify } from "aws-amplify";
 import amplifyconfig from "../src/amplifyconfiguration.json";
@@ -28,24 +29,39 @@ function RootLayout() {
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
   });
 
-  // useEffect(() => {
-  //   if (loaded) {
-  //     SplashScreen.hideAsync();
-  //   }
-  // }, [loaded]);
+  useEffect(() => {
+    if (loaded) {
+      SplashScreen.hideAsync();
+    }
+  }, [loaded]);
 
-  // if (!loaded) {
-  //   return null;
-  // }
+  if (!loaded) {
+    return null;
+  }
 
   return (
-    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
+    <Authenticator.Provider>
+      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+        <Stack
+          screenOptions={{
+            headerShown: false,
+          }}
+        >
+          {/* <Stack.Screen name="auth/sign-in" options={{ headerShown: false }} /> */}
+          {/* <Stack.Screen name="+not-found" />
+        <Stack.Screen name="sign-in" />
+        <Stack.Screen name="sign-up" />
+        <Stack.Screen name="home/index" />
+        <Stack.Screen name="homeapp" /> */}
+          <Stack.Screen name="sign-in" />
+          <Stack.Screen name="sign-up" />
+          <Stack.Screen name="(home)" />
+
+          <Stack.Screen name="+not-found" />
+        </Stack>
+        <StatusBar style="auto" />
+      </ThemeProvider>
+    </Authenticator.Provider>
   );
 }
-export default withAuthenticator(RootLayout);
+export default RootLayout;
