@@ -19,6 +19,7 @@ const HomeLayout = () => {
     >
       <Stack.Screen name="index" />
       <Stack.Screen name="startorder" />
+      <Stack.Screen name="orderstatus" />
       {/* <Stack.Screen name="details" /> */}
     </Stack>
   );
