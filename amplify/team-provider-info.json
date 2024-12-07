@@ -9,10 +9,20 @@
       "UnauthRoleName": "amplify-healthdelivery-staging-54151-unauthRole",
       "StackName": "amplify-healthdelivery-staging-54151",
       "StackId": "arn:aws:cloudformation:us-east-1:940482413101:stack/amplify-healthdelivery-staging-54151/d13dc140-a6ed-11ef-b861-12b279671855",
-      "AmplifyAppId": "d3cpg6px3bg76s"
+      "AmplifyAppId": "d3cpg6px3bg76s",
+      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-healthdelivery-staging-54151-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
     },
     "categories": {
       "auth": {
+        "healthdelivery": {}
+      },
+      "function": {
+        "healthdeliveryPostConfirmation": {
+          "deploymentBucketName": "amplify-healthdelivery-staging-54151-deployment",
+          "s3Key": "amplify-builds/healthdeliveryPostConfirmation-366270474d6a486a3147-build.zip"
+        }
+      },
+      "api": {
         "healthdelivery": {}
       }
     }

@@ -24,7 +24,6 @@ const SignUpScreen = () => {
   const [error, setError] = useState("");
 
   const onSignUpPressed = async () => {
-    setError("");
     try {
       const { isSignUpComplete, userId, nextStep } = await signUp({
         username: email,
@@ -32,16 +31,13 @@ const SignUpScreen = () => {
 
         options: {
           userAttributes: { name },
-          autoSignIn: true,
+          // autoSignIn: true,
         },
       });
+      router.push("/confirm-signup");
+      console.log(nextStep);
       if (isSignUpComplete) {
-        router.push({
-          pathname: "/confirm-signup",
-          params: {
-            username: email,
-          },
-        });
+        router.push("/confirm-signup");
       }
     } catch (e: any) {
       setError(e.message);

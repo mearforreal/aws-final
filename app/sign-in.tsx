@@ -27,6 +27,7 @@ const SignInScreen = () => {
       const { isSignedIn, nextStep } = await signIn({
         username: email,
         password,
+
         options: {
           authFlowType: "USER_PASSWORD_AUTH",
         },
